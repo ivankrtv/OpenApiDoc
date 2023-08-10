@@ -1,0 +1,30 @@
+{
+  "name": "openapi-doc",
+  "version": "0.1.0",
+  "description": "Lib to generate openApi documentation on ts",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ivankrtv/OpenApiDoc.git"
+  },
+  "keywords": [
+    "openapi",
+    "documentation",
+    "generate",
+    "typescript",
+    "ts"
+  ],
+  "author": "ivankrtv",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ivankrtv/OpenApiDoc/issues"
+  },
+  "homepage": "https://github.com/ivankrtv/OpenApiDoc#readme",
+  "dependencies": {
+    "@fosfad/openapi-typescript-definitions": "^0.0.28",
+    "reflect-metadata": "^0.1.13"
+  }
+}
