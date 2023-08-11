@@ -2,16 +2,16 @@ import { SchemaObject } from "@fosfad/openapi-typescript-definitions/3.1.0";
 import('reflect-metadata')
 import {
   arraySchema,
-  ArraySchemaParams, booleanSchema, BooleanSchemaParams, enumSchema, EnumSchemaParams,
+  ArraySchemaParams, booleanSchema, BooleanSchemaParams, enumSchema, EnumSchemaParams, floatSchema, FloatSchemaParams,
   integerSchema,
   IntegerSchemaParams,
   stringSchema,
   StringSchemaParams
-} from "../factories/schemasFactory";
+} from '../factories/schemasFactory';
 
 export type Model = Function;
-export type ArrayItemType = Model | 'string' | 'number' | 'date';
-type ArrayItemSchema = { type: 'string', format?: string, examples?: string[] } | { type: 'number', format?: string, examples?: number[] };
+export type ArrayItemType = Model | 'string' | 'number';
+type ArrayItemSchema = { type: 'string', format?: string, example: string } | { type: 'number', example: number };
 export type ArrayParams = Omit<ArraySchemaParams, 'items'> & {
   items: ArrayItemType | ArrayItemSchema,
   isOptional?: boolean;
@@ -23,6 +23,9 @@ export type EnumParams = Omit<EnumSchemaParams, 'enum'> & {
 export type IntegerParams = IntegerSchemaParams & {
   isOptional?: boolean;
 };
+export type FloatParams = FloatSchemaParams & {
+  isOptional?: boolean;
+}
 export type StringParams = StringSchemaParams & {
   isOptional?: boolean;
 };
@@ -77,6 +80,23 @@ export const IntProperty = (params: IntegerParams): PropertyDecorator => {
   }
 }
 
+export const FloatProperty = (params: FloatParams): PropertyDecorator => {
+  return (target: Object, propertyKey: string) => {
+    const constructor = target.constructor;
+    const currentMetadata = Reflect.getMetadata('API_DOC_SCHEMA', constructor) || null;
+
+    const { isOptional, ...schemaParams } = params;
+    const propertySchema = floatSchema(schemaParams);
+    const updatedMetadata = getUpdatedSchema(currentMetadata, constructor.name, propertyKey, propertySchema, isOptional ?? false);
+
+    if (currentMetadata === null) {
+      Reflect.defineMetadata('API_DOC_SCHEMA', constructor.name, constructor);
+    }
+
+    Reflect.defineMetadata('API_DOC_SCHEMA', updatedMetadata, constructor);
+  }
+}
+
 export const StringProperty = (params: StringParams): PropertyDecorator => {
   return (target: Object, propertyKey: string) => {
     const constructor = target.constructor;
@@ -112,15 +132,6 @@ export const BoolProperty = (params: BooleanParams): PropertyDecorator => {
     }
 
     Reflect.defineMetadata('API_DOC_SCHEMA', updatedMetadata, constructor);
-  }
-}
-
-export const DateProperty = (): PropertyDecorator => {
-  return (target: Object, propertyKey: string) => {
-    const constructor = target.constructor;
-    const currentMetadata = Reflect.getMetadata('API_DOC_SCHEMA', constructor) || null;
-    currentMetadata[propertyKey] = 'string';
-    Reflect.defineMetadata('API_DOC_SCHEMA', currentMetadata, constructor);
   }
 }
 
@@ -196,13 +207,6 @@ export const ArrayProperty = (params: ArrayParams): PropertyDecorator => {
       if (params.items === 'number') {
         items = {
           type: 'number',
-        };
-      }
-      if (params.items === 'date') {
-        items = {
-          type: 'string',
-          format: 'Date',
-          examples: ['2022-01-15T10:00:00'],
         };
       }
     }

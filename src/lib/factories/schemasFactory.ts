@@ -38,8 +38,8 @@ export type FloatSchemaParams = {
   example: number;
   examples?: NonNullable<SchemaObject['examples']>;
   externalDocs?: SchemaObject['externalDocs'];
-  maximum: SchemaObject['maximum'];
-  minimum: SchemaObject['minimum'];
+  maximum?: SchemaObject['maximum'];
+  minimum?: SchemaObject['minimum'];
   nullable?: boolean;
   deprecated?: boolean;
 }

@@ -25,6 +25,7 @@
   "homepage": "https://github.com/ivankrtv/OpenApiDoc#readme",
   "dependencies": {
     "@fosfad/openapi-typescript-definitions": "^0.0.28",
+    "@types/node": "^20.4.10",
     "reflect-metadata": "^0.1.13"
   }
 }

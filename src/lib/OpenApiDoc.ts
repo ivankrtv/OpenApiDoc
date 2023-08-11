@@ -1,16 +1,22 @@
-import { OpenAPI, Reference, SecurityScheme, Tag } from "@fosfad/openapi-typescript-definitions/3.1.0";
-import { OpenAPIDocConfig } from "../lib-drafts/OpenApi";
+import { Info, OpenAPI, SecurityScheme, Tag } from '@fosfad/openapi-typescript-definitions/3.1.0';
 import { Controller } from "./Controller";
-import { TagGroup } from "../lib-drafts/ApiTagsManager";
-import { promises } from "node:fs";
 import * as fs from "fs";
 
-export class OpenApiBuilder {
+export type OpenAPIDocConfig = Info & {
+  /**
+   * Use description from external file in md format, in field expected path to file with description
+   */
+  additionalDescription?: string
+}
+
+export type TagGroup = { name: string; tags: string[] };
+
+export class OpenApiDoc {
   private openApi: OpenAPI & { 'x-tagGroups': Array<{ name: string; tags: string[] }> };
   private externalDescriptionPath: string;
 
   constructor(config: OpenAPIDocConfig) {
-    const { externalDescription, ...info } = config;
+    const { additionalDescription, ...info } = config;
 
     this.openApi = {
       openapi: '3.1.0',
@@ -23,7 +29,7 @@ export class OpenApiBuilder {
       'x-tagGroups': [],
     }
     this.openApi.info = info;
-    this.externalDescriptionPath = externalDescription;
+    this.externalDescriptionPath = additionalDescription;
   }
 
   createController(prefix?: string, defaultTags?: Tag[]): Controller {
@@ -59,11 +65,6 @@ export class OpenApiBuilder {
       this.addExternalDescription();
     }
     return this.openApi as OpenAPI;
-  }
-
-  async saveToFile(path: string): Promise<void> {
-    const openApiJson = JSON.stringify(this.openApi, null, 2);
-    await promises.writeFile(path, openApiJson);
   }
 
   // ------ private methods ------------
