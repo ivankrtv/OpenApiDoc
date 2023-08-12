@@ -1,6 +1,7 @@
 {
   "name": "@ivankrtv/openapidoc",
   "description": "Lib to generate openApi documentation on ts",
+  "main": "src/index.ts",
   "scripts": {
     "build": "tsc",
     "lint": "eslint \"src/**/*.ts\" --quiet",
