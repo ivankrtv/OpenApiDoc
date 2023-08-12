@@ -1,4 +1,4 @@
-import { OpenApiDoc } from './lib/OpenApiDoc';
+import { OpenApiDoc, OpenAPIDocConfig, TagGroup } from './lib/OpenApiDoc';
 import {
   StringProperty,
   IntProperty,
@@ -7,6 +7,15 @@ import {
   BoolProperty,
   EnumProperty,
   ObjectProperty,
+  StringParams,
+  ArrayParams,
+  ArrayItemType,
+  BooleanParams,
+  EnumParams,
+  FloatParams,
+  IntegerParams,
+  ObjectParams,
+  Model,
 } from './lib/decorators/ApiProperty.decorators';
 
 export {
@@ -18,4 +27,15 @@ export {
   BoolProperty,
   EnumProperty,
   ObjectProperty,
+  OpenAPIDocConfig,
+  Model,
+  BooleanParams,
+  ObjectParams,
+  IntegerParams,
+  StringParams,
+  FloatParams,
+  ArrayParams,
+  EnumParams,
+  ArrayItemType,
+  TagGroup,
 };
