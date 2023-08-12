@@ -1,6 +1,5 @@
 {
   "name": "openapi-doc",
-  "version": "0.1.0",
   "description": "Lib to generate openApi documentation on ts",
   "scripts": {
     "build": "tsc",
