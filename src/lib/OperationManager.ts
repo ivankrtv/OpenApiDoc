@@ -1,15 +1,15 @@
-import { Model } from "./decorators/ApiProperty.decorators";
+import { Model } from './decorators/ApiProperty.decorators';
 import {
   OpenAPI,
   Operation,
   SchemaObject,
   SecurityRequirement,
-  Tag
-} from "@fosfad/openapi-typescript-definitions/3.1.0";
-import { Parameters } from "./Parameters";
-import { SchemaManager } from "./SchemaManager";
-import { ResponsesManager } from "./ResponsesManager";
-import { RequestBodyManager } from "./RequestBodyManager";
+  Tag,
+} from '@fosfad/openapi-typescript-definitions/3.1.0';
+import { Parameters } from './Parameters';
+import { SchemaManager } from './SchemaManager';
+import { ResponsesManager } from './ResponsesManager';
+import { RequestBodyManager } from './RequestBodyManager';
 
 export type ResponseSchemas = { [statusCode: string]: Model[] | undefined };
 
@@ -29,18 +29,19 @@ export type OperationParams = {
   errorSchemas?: Array<SchemaObject>;
   tags?: Tag | Tag[];
   deprecationMessage?: string | undefined;
-}
+};
 
 export class OperationManager {
+  private readonly openApiState: OpenAPI;
+  private readonly defaultTags: Tag[];
   private readonly parameters: Parameters;
   private readonly schemaManager: SchemaManager;
   private readonly responsesManager: ResponsesManager;
   private readonly requestBodyManager: RequestBodyManager;
 
-  constructor(
-    private readonly openApiState: OpenAPI,
-    private readonly defaultTags: Tag[]
-  ) {
+  constructor(openApiState: OpenAPI, defaultTags: Tag[]) {
+    this.openApiState = openApiState;
+    this.defaultTags = defaultTags;
     this.parameters = new Parameters();
     this.schemaManager = new SchemaManager(this.openApiState);
     this.responsesManager = new ResponsesManager(this.schemaManager);
@@ -73,7 +74,7 @@ export class OperationManager {
   }
 
   private getTagsToApiMethod(newTags: Tag | Tag[], path: string): string[] | undefined {
-    let tags = this.defaultTags.map((tag: Tag) => tag.name);
+    const tags = this.defaultTags.map((tag: Tag) => tag.name);
 
     if (newTags === undefined) {
       return tags;
@@ -84,7 +85,7 @@ export class OperationManager {
       if (tags.includes(newTag.name)) {
         throw new Error(`Duplicate tag '${newTag.name}' in method '${path}'`);
       }
-    })
+    });
 
     tags.push(...newTags.map((tag: Tag) => tag.name));
 

@@ -1,13 +1,13 @@
 import { Info, OpenAPI, SecurityScheme, Tag } from '@fosfad/openapi-typescript-definitions/3.1.0';
-import { Controller } from "./Controller";
-import * as fs from "fs";
+import { Controller } from './Controller';
+import * as fs from 'fs';
 
 export type OpenAPIDocConfig = Info & {
   /**
    * Use description from external file in md format, in field expected path to file with description
    */
-  additionalDescription?: string
-}
+  additionalDescription?: string;
+};
 
 export type TagGroup = { name: string; tags: string[] };
 
@@ -27,7 +27,7 @@ export class OpenApiDoc {
         schemas: {},
       },
       'x-tagGroups': [],
-    }
+    };
     this.openApi.info = info;
     this.externalDescriptionPath = additionalDescription;
   }
@@ -40,7 +40,7 @@ export class OpenApiDoc {
     const newTag: Tag = {
       name: name,
       description: description,
-    }
+    };
     this.openApi.tags.push(newTag);
     return newTag;
   }
@@ -52,11 +52,11 @@ export class OpenApiDoc {
     const newTagGroup: TagGroup = {
       name: name,
       tags: tags.map((tag: Tag) => tag.name),
-    }
+    };
     this.openApi['x-tagGroups'].push(newTagGroup);
   }
 
-  setAuthorization(security: { [key: string]: SecurityScheme; }): void {
+  setAuthorization(security: { [key: string]: SecurityScheme }): void {
     this.openApi.components.securitySchemes = security;
   }
 

@@ -9,7 +9,7 @@ export type IntegerSchemaParams = {
   minimum?: SchemaObject['minimum'];
   nullable?: boolean;
   deprecated?: boolean;
-}
+};
 
 export type StringSchemaParams = {
   description: NonNullable<SchemaObject['description']>;
@@ -22,7 +22,7 @@ export type StringSchemaParams = {
   pattern?: SchemaObject['pattern'];
   nullable?: boolean;
   deprecated?: boolean;
-}
+};
 
 export type DateSchemaPath = {
   description: NonNullable<SchemaObject['description']>;
@@ -31,7 +31,7 @@ export type DateSchemaPath = {
   pattern?: SchemaObject['pattern'];
   nullable?: boolean;
   deprecated?: boolean;
-}
+};
 
 export type FloatSchemaParams = {
   description: NonNullable<SchemaObject['description']>;
@@ -42,7 +42,7 @@ export type FloatSchemaParams = {
   minimum?: SchemaObject['minimum'];
   nullable?: boolean;
   deprecated?: boolean;
-}
+};
 
 export type ObjectSchemaParams = {
   additionalProperties: NonNullable<SchemaObject['additionalProperties']>;
@@ -51,14 +51,14 @@ export type ObjectSchemaParams = {
   externalDocs?: SchemaObject['externalDocs'];
   properties: NonNullable<SchemaObject['properties']>;
   nullable?: boolean;
-}
+};
 
 export type BooleanSchemaParams = {
-  description?: SchemaObject['description'],
+  description?: SchemaObject['description'];
   nullable?: boolean;
   isOptional?: boolean;
   deprecated?: boolean;
-}
+};
 
 export type ArraySchemaParams = {
   description: NonNullable<SchemaObject['description']>;
@@ -68,14 +68,14 @@ export type ArraySchemaParams = {
   uniqueItems?: NonNullable<SchemaObject['uniqueItems']>;
   nullable?: boolean;
   deprecated?: boolean;
-}
+};
 
 export type EnumSchemaParams = {
   description?: NonNullable<SchemaObject['description']>;
   enum: Array<string>;
   nullable?: boolean;
   deprecated?: boolean;
-}
+};
 
 export const stringSchema = (schema: StringSchemaParams): SchemaObject => {
   return {
@@ -102,8 +102,8 @@ export const dateSchema = (schema: DateSchemaPath): SchemaObject => {
   return {
     ...schema,
     type: 'string',
-  }
-}
+  };
+};
 
 export const booleanSchema = (schema: BooleanSchemaParams): SchemaObject => {
   return {
@@ -131,7 +131,7 @@ export const enumSchema = (schema: EnumSchemaParams): SchemaObject => {
   return {
     ...schema,
     type: 'string',
-  }
-}
+  };
+};
 
-export const schemas: { [schemaTitle: string]: SchemaObject } = {}
+export const schemas: { [schemaTitle: string]: SchemaObject } = {};

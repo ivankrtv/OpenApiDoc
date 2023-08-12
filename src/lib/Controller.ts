@@ -1,8 +1,5 @@
-import {
-  OpenAPI,
-  Tag
-} from "@fosfad/openapi-typescript-definitions/3.1.0";
-import { OperationManager, OperationParams } from "./OperationManager";
+import { OpenAPI, Tag } from '@fosfad/openapi-typescript-definitions/3.1.0';
+import { OperationManager, OperationParams } from './OperationManager';
 
 export class Controller {
   private readonly openApiState: OpenAPI;
@@ -36,7 +33,7 @@ export class Controller {
    * Method add new endpoint
    */
   addApiMethod(path: string, params: OperationParams): void {
-    let methodPath = this.getFullPath(path);
+    const methodPath = this.getFullPath(path);
 
     const operation = this.operationsManager.createOperation(path, params);
 
@@ -45,7 +42,7 @@ export class Controller {
         throw new Error(`Method POST is already exist in ${methodPath}`);
       }
       this.openApiState.paths[methodPath] = {
-        post: operation
+        post: operation,
       };
     }
     if (params.method === 'GET') {
@@ -53,36 +50,34 @@ export class Controller {
         throw new Error(`Method GET is already exist in ${methodPath}`);
       }
       this.openApiState.paths[methodPath] = {
-        get: operation
-      }
+        get: operation,
+      };
     }
     if (params.method === 'DELETE') {
       if (this.openApiState.paths[methodPath]?.delete !== undefined) {
         throw new Error(`Method DELETE is already exist in ${methodPath}`);
       }
       this.openApiState.paths[methodPath] = {
-        delete: operation
-      }
+        delete: operation,
+      };
     }
     if (params.method === 'PUT') {
       if (this.openApiState.paths[methodPath]?.put !== undefined) {
         throw new Error(`Method PUT is already exist in ${methodPath}`);
       }
       this.openApiState.paths[methodPath] = {
-        put: operation
-      }
+        put: operation,
+      };
     }
     if (params.method === 'PATCH') {
       if (this.openApiState.paths[methodPath]?.patch !== undefined) {
         throw new Error(`Method PATCH is already exist in ${methodPath}`);
       }
       this.openApiState.paths[methodPath] = {
-        patch: operation
-      }
+        patch: operation,
+      };
     }
   }
-
-
 
   private getFullPath(path: string): string {
     if (path[0] !== '/') return this.prefix + '/' + path;

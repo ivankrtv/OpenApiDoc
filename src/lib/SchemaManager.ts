@@ -1,5 +1,5 @@
-import { OpenAPI, Reference, SchemaObject } from "@fosfad/openapi-typescript-definitions/3.1.0";
-import { Model } from "./decorators/ApiProperty.decorators";
+import { OpenAPI, Reference, SchemaObject } from '@fosfad/openapi-typescript-definitions/3.1.0';
+import { Model } from './decorators/ApiProperty.decorators';
 
 export class SchemaManager {
   private readonly openApiState: OpenAPI;
@@ -13,14 +13,14 @@ export class SchemaManager {
     return {
       description: model.name,
       $ref: `#/components/schemas/${model.name}`,
-    }
+    };
   }
 
   getManyReferences(models: Model[]): SchemaObject {
     if (models.length === 1) {
       return {
         description: models[0].name,
-        ...this.getReference(models[0])
+        ...this.getReference(models[0]),
       };
     }
 
@@ -31,9 +31,9 @@ export class SchemaManager {
     models.forEach((model) => {
       schema.oneOf.push({
         description: model.name,
-        ...this.getReference(model)
+        ...this.getReference(model),
       });
-    })
+    });
 
     return schema;
   }
@@ -64,13 +64,13 @@ export class SchemaManager {
       properties: existSchemas[schemaName].properties,
       required: existSchemas[schemaName].required,
       description: existSchemas[schemaName].description,
-    }
+    };
 
     const newSchema = {
       properties: schema.properties,
       required: schema.required,
       description: schema.description,
-    }
+    };
 
     if (JSON.stringify(existSchema, null, 2) !== JSON.stringify(newSchema, null, 2)) {
       throw new Error(`Duplicate schema name: '${schemaName}' is already exist.`);

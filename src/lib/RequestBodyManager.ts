@@ -1,9 +1,12 @@
-import { SchemaManager } from "./SchemaManager";
-import { Model } from "./decorators/ApiProperty.decorators";
-import { RequestBody } from "@fosfad/openapi-typescript-definitions/3.1.0";
+import { SchemaManager } from './SchemaManager';
+import { Model } from './decorators/ApiProperty.decorators';
+import { RequestBody } from '@fosfad/openapi-typescript-definitions/3.1.0';
 
 export class RequestBodyManager {
-  constructor(private readonly schemaManager: SchemaManager) {
+  private readonly schemaManager: SchemaManager;
+
+  constructor(schemaManager: SchemaManager) {
+    this.schemaManager = schemaManager;
   }
 
   create(requestBody: Model | undefined, content: string | undefined): RequestBody {
@@ -18,7 +21,7 @@ export class RequestBodyManager {
     const body: RequestBody = { content: {}, description: description };
     body.content[contentType] = {
       schema: this.schemaManager.getReference(requestBody),
-    }
+    };
 
     return body;
   }

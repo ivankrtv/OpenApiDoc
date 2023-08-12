@@ -1,20 +1,21 @@
-import { Model } from "./decorators/ApiProperty.decorators";
+import { Model } from './decorators/ApiProperty.decorators';
 import {
   CookieParameter,
   HeaderParameter,
   Parameter,
-  PathParameter, QueryParameter,
+  PathParameter,
+  QueryParameter,
   Reference,
   Schema,
-  SchemaObject
-} from "@fosfad/openapi-typescript-definitions/3.1.0";
+  SchemaObject,
+} from '@fosfad/openapi-typescript-definitions/3.1.0';
 
 export class Parameters {
-  create (
+  create(
     paramsModel: Model | undefined,
     queryModel: Model | undefined,
     headers: Model | undefined,
-    cookies: Model | undefined
+    cookies: Model | undefined,
   ): Array<Parameter | Reference> {
     const parameters: Array<Parameter | Reference> = [];
 
@@ -53,7 +54,7 @@ export class Parameters {
         schema: {
           type: property['type'],
         } as Schema,
-      })
+      });
     });
 
     return params;
@@ -78,7 +79,7 @@ export class Parameters {
         schema: {
           type: property['type'],
         } as Schema,
-      })
+      });
     });
 
     return queryParameters;
