@@ -17,6 +17,7 @@ import {
   ObjectParams,
   Model,
 } from './lib/decorators/ApiProperty.decorators';
+import { ModelDescription } from './lib/decorators/ModelDescription.decorator';
 import { OperationManager, ResponseSchemas, OperationParams } from './lib/OperationManager';
 
 export {
@@ -28,6 +29,7 @@ export {
   BoolProperty,
   EnumProperty,
   ObjectProperty,
+  ModelDescription,
   OpenAPIDocConfig,
   Model,
   BooleanParams,
