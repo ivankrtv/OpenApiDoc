@@ -17,6 +17,7 @@ import {
   ObjectParams,
   Model,
 } from './lib/decorators/ApiProperty.decorators';
+import { OperationManager, ResponseSchemas, OperationParams } from './lib/OperationManager';
 
 export {
   OpenApiDoc,
@@ -38,4 +39,7 @@ export {
   EnumParams,
   ArrayItemType,
   TagGroup,
+  OperationManager,
+  ResponseSchemas,
+  OperationParams,
 };
