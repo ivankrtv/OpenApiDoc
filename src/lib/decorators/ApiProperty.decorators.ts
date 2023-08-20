@@ -178,6 +178,9 @@ export const ObjectProperty = (params: ObjectParams): PropertyDecorator => {
     const propertyType = Reflect.getMetadata('design:type', target, propertyKey);
     const nestedMetadata = Reflect.getMetadata('API_DOC_SCHEMA', propertyType);
 
+    const dependedMetadata = Reflect.getMetadata('API_DOC_DEPENDED_SCHEMAS', constructor) || [];
+    dependedMetadata.push(nestedMetadata);
+
     const currentMetadata = Reflect.getMetadata('API_DOC_SCHEMA', constructor) || null;
 
     const refSchema: SchemaObject & { nullable?: boolean } = {
@@ -197,9 +200,11 @@ export const ObjectProperty = (params: ObjectParams): PropertyDecorator => {
 
     if (currentMetadata === null) {
       Reflect.defineMetadata('API_DOC_SCHEMA', constructor.name, constructor);
+      Reflect.defineMetadata('API_DOC_DEPENDED_SCHEMAS', dependedMetadata, constructor);
     }
 
     Reflect.defineMetadata('API_DOC_SCHEMA', updatedMetadata, constructor);
+    Reflect.defineMetadata('API_DOC_DEPENDED_SCHEMAS', dependedMetadata, constructor);
   };
 };
 
@@ -241,11 +246,13 @@ export const ArrayProperty = (params: ArrayParams): PropertyDecorator => {
   return (target: Object, propertyKey: string) => {
     const constructor = target.constructor;
     const currentMetadata = Reflect.getMetadata('API_DOC_SCHEMA', constructor) || null;
+    const dependedMetadata = Reflect.getMetadata('API_DOC_DEPENDED_SCHEMAS', constructor) || [];
 
     let items: SchemaObject;
 
     if (typeof params.items === 'function') {
       items = Reflect.getMetadata('API_DOC_SCHEMA', params.items);
+      dependedMetadata.push(items);
     } else if (typeof params.items === 'object') {
       items = params.items;
     } else {
@@ -281,8 +288,10 @@ export const ArrayProperty = (params: ArrayParams): PropertyDecorator => {
 
     if (currentMetadata === null) {
       Reflect.defineMetadata('API_DOC_SCHEMA', constructor.name, constructor);
+      Reflect.defineMetadata('API_DOC_DEPENDED_SCHEMAS', dependedMetadata, constructor);
     }
 
     Reflect.defineMetadata('API_DOC_SCHEMA', updatedMetadata, constructor);
+    Reflect.defineMetadata('API_DOC_DEPENDED_SCHEMAS', dependedMetadata, constructor);
   };
 };
