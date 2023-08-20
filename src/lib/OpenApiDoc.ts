@@ -1,8 +1,11 @@
-import { Info, OpenAPI, SecurityScheme, Tag } from '@fosfad/openapi-typescript-definitions/3.1.0';
+import { OpenAPI, SecurityScheme, Tag } from '@fosfad/openapi-typescript-definitions/3.1.0';
 import { Controller } from './Controller';
 import * as fs from 'fs';
 
-export type OpenAPIDocConfig = Info & {
+export type OpenAPIDocConfig = {
+  title: string;
+  version: string;
+  description?: undefined | string;
   /**
    * Use description from external file in md format, in field expected path to file with description
    */

@@ -53,7 +53,7 @@ export class OperationManager {
     if (params.deprecationMessage) {
       description = `**_Deprecated:_** ${params.deprecationMessage}\n\n${description}`;
     }
-    if (params.isImplemented) {
+    if (!params.isImplemented) {
       params.title = '⏳ ' + params.title;
       description = '⏳️ — Данный метод еще **не реализован** \n\n' + description;
     }
