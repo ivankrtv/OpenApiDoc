@@ -70,7 +70,7 @@ export class Parameters {
       const property = schema.properties[propertyName];
       queryParameters.push({
         in: 'query',
-        required: true,
+        required: schema.required.includes(propertyName),
         name: propertyName,
         description: property['description'],
         example: property['example'],
@@ -95,7 +95,7 @@ export class Parameters {
       const property = schema.properties[propertyName];
       headerParameters.push({
         in: 'header',
-        required: true,
+        required: schema.required.includes(propertyName),
         name: propertyName,
         description: property['description'],
         example: property['example'],
@@ -120,7 +120,7 @@ export class Parameters {
       const property = schema.properties[propertyName];
       cookieParameters.push({
         in: 'cookie',
-        required: true,
+        required: schema.required.includes(propertyName),
         name: propertyName,
         description: property['description'],
         example: property['example'],
