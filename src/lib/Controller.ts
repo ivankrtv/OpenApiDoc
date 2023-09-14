@@ -41,6 +41,10 @@ export class Controller {
       if (this.openApiState.paths[methodPath]?.post !== undefined) {
         throw new Error(`Method POST is already exist in ${methodPath}`);
       }
+      if (this.openApiState.paths[methodPath] !== undefined) {
+        this.openApiState.paths[methodPath].post = operation;
+        return;
+      }
       this.openApiState.paths[methodPath] = {
         post: operation,
       };
@@ -48,6 +52,10 @@ export class Controller {
     if (params.method === 'GET') {
       if (this.openApiState.paths[methodPath]?.get !== undefined) {
         throw new Error(`Method GET is already exist in ${methodPath}`);
+      }
+      if (this.openApiState.paths[methodPath] !== undefined) {
+        this.openApiState.paths[methodPath].get = operation;
+        return;
       }
       this.openApiState.paths[methodPath] = {
         get: operation,
@@ -57,6 +65,10 @@ export class Controller {
       if (this.openApiState.paths[methodPath]?.delete !== undefined) {
         throw new Error(`Method DELETE is already exist in ${methodPath}`);
       }
+      if (this.openApiState.paths[methodPath] !== undefined) {
+        this.openApiState.paths[methodPath].delete = operation;
+        return;
+      }
       this.openApiState.paths[methodPath] = {
         delete: operation,
       };
@@ -65,6 +77,10 @@ export class Controller {
       if (this.openApiState.paths[methodPath]?.put !== undefined) {
         throw new Error(`Method PUT is already exist in ${methodPath}`);
       }
+      if (this.openApiState.paths[methodPath] !== undefined) {
+        this.openApiState.paths[methodPath].put = operation;
+        return;
+      }
       this.openApiState.paths[methodPath] = {
         put: operation,
       };
@@ -72,6 +88,10 @@ export class Controller {
     if (params.method === 'PATCH') {
       if (this.openApiState.paths[methodPath]?.patch !== undefined) {
         throw new Error(`Method PATCH is already exist in ${methodPath}`);
+      }
+      if (this.openApiState.paths[methodPath] !== undefined) {
+        this.openApiState.paths[methodPath].patch = operation;
+        return;
       }
       this.openApiState.paths[methodPath] = {
         patch: operation,
