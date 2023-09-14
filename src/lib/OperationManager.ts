@@ -65,7 +65,7 @@ export class OperationManager {
       security: params.requiresAuthorization ? this.getSecurity() : undefined,
       description: description,
       deprecated: params.deprecationMessage !== undefined,
-      operationId: path,
+      operationId: `${params.method}_${path}`,
       requestBody: this.requestBodyManager.create(params.requestBody, params.content),
       parameters: this.parameters.create(params.pathParams, params.query, params.header, params.cookie),
       responses: this.responsesManager.createResponse(params.responses),

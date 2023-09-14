@@ -16,6 +16,7 @@ export class ResponsesManager {
     const codes = Object.keys(responseSchemas);
 
     const descriptions: { [code: string]: string } = {
+      '201': 'Сущность создана успешно',
       '200': 'Успешный ответ',
       '400': 'Валидационная или доменная ошибка',
       '404': 'Сущность не найдена',
