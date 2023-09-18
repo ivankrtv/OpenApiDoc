@@ -43,6 +43,7 @@ export type ObjectParams = {
   deprecated?: boolean;
   nullable?: boolean;
   isOptional?: boolean;
+  oneOf?: Model[];
 };
 
 const getUpdatedSchema = (
@@ -175,11 +176,27 @@ export const ObjectProperty = (params: ObjectParams): PropertyDecorator => {
   return (target: Object, propertyKey: string) => {
     const constructor = target.constructor;
 
-    const propertyType = Reflect.getMetadata('design:type', target, propertyKey);
-    const nestedMetadata = Reflect.getMetadata('API_DOC_SCHEMA', propertyType);
+    let ref = undefined;
 
     const dependedMetadata = Reflect.getMetadata('API_DOC_DEPENDED_SCHEMAS', constructor) || [];
-    dependedMetadata.push(nestedMetadata);
+
+    if (params.oneOf === undefined) {
+      const propertyType = Reflect.getMetadata('design:type', target, propertyKey);
+      const nestedMetadata = Reflect.getMetadata('API_DOC_SCHEMA', propertyType);
+
+      ref = `#/components/schemas/${nestedMetadata.title}`;
+
+      dependedMetadata.push(nestedMetadata);
+    } else {
+      const oneOfMetadata = params.oneOf.map((propType) => Reflect.getMetadata('API_DOC_SCHEMA', propType));
+
+      ref = [];
+      oneOfMetadata.forEach((metadata) => {
+        ref.push({ $ref: `#/components/schemas/${metadata.title}` });
+      });
+
+      dependedMetadata.push(...oneOfMetadata);
+    }
 
     const currentMetadata = Reflect.getMetadata('API_DOC_SCHEMA', constructor) || null;
 
@@ -187,7 +204,8 @@ export const ObjectProperty = (params: ObjectParams): PropertyDecorator => {
       description: params.description,
       deprecated: params.deprecated !== undefined ? params.deprecated : false,
       nullable: params.nullable ?? false,
-      $ref: `#/components/schemas/${nestedMetadata.title}`,
+      $ref: params.oneOf === undefined ? ref : undefined,
+      oneOf: params.oneOf === undefined ? undefined : ref,
     };
 
     const updatedMetadata = getUpdatedSchema(

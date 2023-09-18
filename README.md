@@ -148,9 +148,20 @@ class User {
   age: number;
 }
 
+class Admin {
+  @StringProperty({ description: 'Роль', example: 'superadmin' })
+  role: string;
+
+  @StringProperty({ description: 'Имя', example: 'Евгений' })
+  name: string;
+}
+
 class ExampleDto {
   @ObjectProperty({ description: 'Пользователь' })
   user: User;
+
+  @ObjectProperty({ description: 'Пользователь', oneOf: [User, Admin] })
+  otherUser: User | Admin;
 }
 ```
 
@@ -159,6 +170,7 @@ class ExampleDto {
 - `nullable: boolean` -флаг устанавливающий может ли поле быть `null` (по умолчанию - `false`)
 - `deprecated: boolean` - флаг устанавливающий является ли поле `deprecated` (по умолчанию - `false`)
 - `isOptional: boolean` - флаг устанавливающий является ли поле опциональным (по умолчанию - `false`)
+- `oneOf: Array` - Параметр для установки нескольких возможных объектов. Принимает массив классов
 
 
 
