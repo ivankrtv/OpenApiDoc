@@ -270,7 +270,9 @@ export const ArrayProperty = (params: ArrayParams): PropertyDecorator => {
 
     if (typeof params.items === 'function') {
       items = Reflect.getMetadata('API_DOC_SCHEMA', params.items);
+      const dependItem = Reflect.getMetadata('API_DOC_DEPENDED_SCHEMAS', params.items) || [];
       dependedMetadata.push(items);
+      dependedMetadata.push(...dependItem);
     } else if (typeof params.items === 'object') {
       items = params.items;
     } else {
