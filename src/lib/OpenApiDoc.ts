@@ -1,6 +1,7 @@
 import { OpenAPI, SecurityScheme, Tag } from '@fosfad/openapi-typescript-definitions/3.1.0';
 import { Controller } from './Controller';
 import * as fs from 'fs';
+import { EventsManager } from './EventsManager';
 
 export type OpenAPIDocConfig = {
   title: string;
@@ -25,6 +26,7 @@ export class OpenApiDoc {
       openapi: '3.1.0',
       info: info,
       paths: {},
+      webhooks: {},
       tags: [],
       components: {
         schemas: {},
@@ -37,6 +39,10 @@ export class OpenApiDoc {
 
   createController(prefix?: string, defaultTags?: Tag[]): Controller {
     return new Controller(this.openApi, prefix, defaultTags);
+  }
+
+  createEventManager(): EventsManager {
+    return new EventsManager(this.openApi);
   }
 
   createTag(name: string, description?: string): Tag {

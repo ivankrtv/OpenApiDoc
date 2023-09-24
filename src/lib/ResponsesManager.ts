@@ -1,6 +1,7 @@
 import { SchemaManager } from './SchemaManager';
 import { Responses } from '@fosfad/openapi-typescript-definitions/3.1.0';
 import { ResponseSchemas } from './OperationManager';
+import { Model } from './decorators/ApiProperty.decorators';
 
 export class ResponsesManager {
   private readonly schemaManager: SchemaManager;
@@ -56,5 +57,26 @@ export class ResponsesManager {
     });
 
     return responses;
+  }
+
+  createEventResponse(responseSchemas: Model[]): Responses {
+    return {
+      '200': {
+        description: 'Событие',
+        headers: {
+          'Content-Type': {
+            schema: {
+              type: 'string',
+              enum: ['text/event-stream'],
+            },
+          },
+        },
+        content: {
+          'text/event-stream as json': {
+            schema: this.schemaManager.getManyReferences(responseSchemas),
+          },
+        },
+      },
+    };
   }
 }
