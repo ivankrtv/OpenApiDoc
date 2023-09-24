@@ -18,7 +18,7 @@ import {
   Model,
 } from './lib/decorators/ApiProperty.decorators';
 import { ModelDescription } from './lib/decorators/ModelDescription.decorator';
-import { OperationManager, ResponseSchemas, OperationParams } from './lib/OperationManager';
+import { OperationManager, EventOperationParams, ResponseSchemas, OperationParams } from './lib/OperationManager';
 
 export {
   OpenApiDoc,
@@ -44,4 +44,5 @@ export {
   OperationManager,
   ResponseSchemas,
   OperationParams,
+  EventOperationParams,
 };

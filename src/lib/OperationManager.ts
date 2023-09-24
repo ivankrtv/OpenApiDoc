@@ -31,6 +31,17 @@ export type OperationParams = {
   deprecationMessage?: string | undefined;
 };
 
+export type EventOperationParams = {
+  /** event - unique name of event */
+  event: string;
+  title: string;
+  description?: string | undefined;
+  isImplemented: boolean;
+  tags?: Tag | Tag[];
+  deprecationMessage?: string | undefined;
+  responses: Model[];
+};
+
 export class OperationManager {
   private readonly openApiState: OpenAPI;
   private readonly defaultTags: Tag[];
@@ -69,6 +80,28 @@ export class OperationManager {
       requestBody: this.requestBodyManager.create(params.requestBody, params.content),
       parameters: this.parameters.create(params.pathParams, params.query, params.header, params.cookie),
       responses: this.responsesManager.createResponse(params.responses),
+      tags: tags,
+    };
+  }
+
+  createEventOperation(params: EventOperationParams): Operation {
+    let description = params.description ?? '';
+    if (params.deprecationMessage) {
+      description = `**_Deprecated:_** ${params.deprecationMessage}\n\n${description}`;
+    }
+    if (!params.isImplemented) {
+      params.title = '⏳ ' + params.title;
+      description = '⏳️ — Данный ивент еще **не реализован** \n\n' + description;
+    }
+
+    const tags = this.getTagsToApiMethod(params.tags, params.event);
+
+    return {
+      summary: `${params.title} [${params.event}]`,
+      description: description,
+      deprecated: params.deprecationMessage !== undefined,
+      operationId: `EVENT_${params.event}`,
+      responses: this.responsesManager.createEventResponse(params.responses),
       tags: tags,
     };
   }
