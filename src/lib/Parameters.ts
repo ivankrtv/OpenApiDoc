@@ -6,7 +6,6 @@ import {
   PathParameter,
   QueryParameter,
   Reference,
-  Schema,
   SchemaObject,
 } from '@fosfad/openapi-typescript-definitions/3.1.0';
 
@@ -51,9 +50,7 @@ export class Parameters {
         example: property['example'],
         examples: property['examples'],
         deprecated: property['deprecated'],
-        schema: {
-          type: property['type'],
-        } as Schema,
+        schema: property,
       });
     });
 
@@ -76,9 +73,7 @@ export class Parameters {
         example: property['example'],
         examples: property['examples'],
         deprecated: property['deprecated'],
-        schema: {
-          type: property['type'],
-        } as Schema,
+        schema: property,
       });
     });
 
@@ -101,9 +96,7 @@ export class Parameters {
         example: property['example'],
         examples: property['examples'],
         deprecated: property['deprecated'],
-        schema: {
-          type: property['type'],
-        } as Schema,
+        schema: property,
       });
     });
 
@@ -126,9 +119,7 @@ export class Parameters {
         example: property['example'],
         examples: property['examples'],
         deprecated: property['deprecated'],
-        schema: {
-          type: property['type'],
-        } as Schema,
+        schema: property,
       });
     });
 
