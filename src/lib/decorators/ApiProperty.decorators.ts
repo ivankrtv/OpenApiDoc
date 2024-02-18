@@ -53,8 +53,8 @@ const getUpdatedSchema = (
   schema: SchemaObject,
   isOptional: boolean = false,
 ) => {
-  let schemaObject: SchemaObject = currentMetadata;
-  if (currentMetadata === null) {
+  let schemaObject: SchemaObject = JSON.parse(JSON.stringify(currentMetadata));
+  if (schemaObject === null) {
     schemaObject = {
       type: 'object',
       title: className,
@@ -63,6 +63,7 @@ const getUpdatedSchema = (
       required: [],
     };
   }
+  schemaObject.title = className;
 
   if (schemaObject.properties[propertyKey] !== undefined) {
     throw new Error(`duplicate property ${propertyKey} in ${className} schema`);
