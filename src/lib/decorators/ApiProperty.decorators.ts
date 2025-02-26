@@ -44,6 +44,7 @@ export type ObjectParams = {
   nullable?: boolean;
   isOptional?: boolean;
   oneOf?: Model[];
+  childTypes?: Model[];
 };
 
 const getUpdatedSchema = (
@@ -188,6 +189,13 @@ export const ObjectProperty = (params: ObjectParams): PropertyDecorator => {
       ref = `#/components/schemas/${nestedMetadata.title}`;
 
       dependedMetadata.push(nestedMetadata);
+
+      if (params.childTypes?.length) {
+        params.childTypes.forEach((propType) => {
+          const childTypeMetadata = Reflect.getMetadata('API_DOC_SCHEMA', propType);
+          dependedMetadata.push(childTypeMetadata);
+        });
+      }
     } else {
       const oneOfMetadata = params.oneOf.map((propType) => Reflect.getMetadata('API_DOC_SCHEMA', propType));
 

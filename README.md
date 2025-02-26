@@ -140,12 +140,31 @@ class ExampleDto {
 
 ```ts
 // Пример класса User
+class UserProfileAvatar {
+  @StringProperty({ description: 'URL автара', example: 'https://picsum.photos/200/200' })
+  url: string;
+
+  @IntProperty({ description: 'Ширина в px', example: 200 })
+  with: number;
+
+  @IntProperty({ description: 'Высота в px', example: 200 })
+  height: number;
+}
+
+class UserProfile {
+  @ObjectProperty({ description: 'Автара' })
+  avatar: UserProfileAvatar;
+}
+
 class User {
   @StringProperty({ description: 'Имя', example: 'Евгений' })
   name: string;
 
   @IntProperty({ description: 'Возраст', example: 18 })
   age: number;
+
+  @ObjectProperty({ description: 'Профиль' })
+  profile: UserProfile;
 }
 
 class Admin {
@@ -157,7 +176,10 @@ class Admin {
 }
 
 class ExampleDto {
-  @ObjectProperty({ description: 'Пользователь' })
+  @ObjectProperty({
+    description: 'Пользователь',
+    childTypes: [UserProfile, UserProfileAvatar],
+  })
   user: User;
 
   @ObjectProperty({ description: 'Пользователь', oneOf: [User, Admin] })
@@ -171,7 +193,7 @@ class ExampleDto {
 - `deprecated: boolean` - флаг устанавливающий является ли поле `deprecated` (по умолчанию - `false`)
 - `isOptional: boolean` - флаг устанавливающий является ли поле опциональным (по умолчанию - `false`)
 - `oneOf: Array` - Параметр для установки нескольких возможных объектов. Принимает массив классов
-
+- `childTypes: Array` - Параметр для регистрации дочерних объектов. Принимает массив классов
 
 
 ### Массив
@@ -513,4 +535,3 @@ const openApiDoc = new OpenApiDoc({
 
 - Начинайте всегда с заголовка первого уровня (`#`). Например, `# Описание ИмяПроекта API`
 - Главы вашего описания обозначайте заголовками второго уровня (`##`). Например, `## Флоу авторизации`
- 
