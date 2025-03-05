@@ -32,14 +32,11 @@ export class ResponsesManager {
       if (responseSchemas[statusCode].length === 1) {
         responses[statusCode] = {
           description: descriptions[statusCode] + ` (${responseSchemas[statusCode][0]?.name})`,
-          content:
-            responseSchemas[statusCode].length === 0
-              ? undefined
-              : {
-                  'application/json': {
-                    schema: this.schemaManager.getManyReferences(responseSchemas[statusCode]),
-                  },
-                },
+          content: {
+            'application/json': {
+              schema: this.schemaManager.getManyReferences(responseSchemas[statusCode]),
+            },
+          },
         };
         return;
       }

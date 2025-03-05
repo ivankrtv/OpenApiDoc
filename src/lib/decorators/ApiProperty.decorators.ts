@@ -1,5 +1,4 @@
 import { SchemaObject } from '@fosfad/openapi-typescript-definitions/3.1.0';
-import('reflect-metadata');
 import {
   arraySchema,
   ArraySchemaParams,
@@ -15,9 +14,18 @@ import {
   StringSchemaParams,
 } from '../factories/schemasFactory';
 
+import('reflect-metadata');
+
 export type Model = Function;
 export type ArrayItemType = Model | 'string' | 'number';
-type ArrayItemSchema = { type: 'string'; format?: string; example: string } | { type: 'number'; example: number };
+type ArrayItemSchema =
+  | { type: 'string'; format?: string; example: string }
+  | { type: 'number'; example: number }
+  | { $ref: string };
+/**
+ * @prop items
+ * to handle circular references use items as `items: { $ref: getSchemaPath(Model) }`
+ */
 export type ArrayParams = Omit<ArraySchemaParams, 'items'> & {
   items: ArrayItemType | ArrayItemSchema;
   isOptional?: boolean;
