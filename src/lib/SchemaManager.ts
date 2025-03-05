@@ -50,14 +50,13 @@ export class SchemaManager {
     if (!dependedSchemas) return;
 
     for (const dependedSchema of dependedSchemas) {
-      this.checkUniqueSchemaName(dependedSchema.title, dependedSchema, model);
+      this.checkUniqueSchemaName(dependedSchema.title, dependedSchema);
       this.openApiState.components.schemas[dependedSchema.title] = dependedSchema;
     }
   }
 
-  private checkUniqueSchemaName(schemaName: string, schema: SchemaObject, selfModel?: Model): void {
+  private checkUniqueSchemaName(schemaName: string, schema: SchemaObject): void {
     if (this.openApiState.components.schemas[schemaName] === undefined) return;
-    if (selfModel && selfModel.name === schemaName) return;
 
     const existSchemas = this.openApiState.components.schemas as { [p: string]: SchemaObject };
 
