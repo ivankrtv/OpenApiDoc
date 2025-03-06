@@ -1,4 +1,4 @@
-import { ObjectProperty, StringProperty, OpenApiDoc, OpenAPIDocConfig } from "../src";
+import { ObjectProperty, StringProperty, OpenApiDoc, OpenAPIDocConfig } from "../index";
 
 describe("ObjectProperty", () => {
   it("Nested object success", () => {
