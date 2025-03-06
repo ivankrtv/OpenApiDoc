@@ -48,6 +48,7 @@
     "dist"
   ],
   "jest": {
+    "verbose": true,
     "moduleFileExtensions": [
       "js",
       "json",
