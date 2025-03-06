@@ -30,7 +30,7 @@ jobs:
             ${{ runner.os }}-npm-
 
       - name: Install npm dependencies
-        run: npm ci --production --prefer-offline
+        run: npm ci --prefer-offline
 
       - name: Run TypeScript compiler
         run: npm run build

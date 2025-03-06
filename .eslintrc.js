@@ -4,13 +4,14 @@ module.exports = {
     project: 'tsconfig.json',
     sourceType: 'module',
   },
-  plugins: ['@typescript-eslint/eslint-plugin', 'prettier', 'workspaces'],
+  plugins: ['@typescript-eslint/eslint-plugin', 'prettier', 'workspaces', 'jest'],
   extends: [
     'eslint:recommended',
   ],
   root: true,
   env: {
     node: true,
+    "jest/globals": true,
   },
   ignorePatterns: ['.eslintrc.js'],
   rules: {
@@ -18,4 +19,13 @@ module.exports = {
     '@typescript-eslint/parser': 'off',
     'prettier/prettier': 'error'
   },
+  settings: {
+    jest: {
+      globalAliases: {
+        describe: ["context"],
+        fdescribe: ["fcontext"],
+        xdescribe: ["xcontext"]
+      }
+    }
+  }
 };
