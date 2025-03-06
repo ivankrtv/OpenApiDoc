@@ -1,4 +1,4 @@
-import { ModelDescription, ObjectProperty, OpenApiDoc, OpenAPIDocConfig, StringProperty } from "../dist";
+import { ObjectProperty, StringProperty, OpenApiDoc, OpenAPIDocConfig } from "../src";
 
 describe("ObjectProperty", () => {
   it("Nested object success", () => {
@@ -37,6 +37,6 @@ describe("ObjectProperty", () => {
 
     expect(doc.components.schemas.hasOwnProperty('TestClass')).toBe(true);
     expect(doc.components.schemas.hasOwnProperty('User')).toBe(true);
-    // expect(doc.components.schemas.hasOwnProperty('Profile')).toBe(true);
+    expect(doc.components.schemas.hasOwnProperty('Profile')).toBe(true);
   })
 })
