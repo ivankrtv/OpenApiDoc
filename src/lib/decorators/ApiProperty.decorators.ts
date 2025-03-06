@@ -1,4 +1,4 @@
-import { SchemaObject } from '@fosfad/openapi-typescript-definitions/3.1.0';
+import { Schema, SchemaObject } from "@fosfad/openapi-typescript-definitions/3.1.0";
 import {
   arraySchema,
   ArraySchemaParams,
@@ -189,22 +189,28 @@ export const ObjectProperty = (params: ObjectParams): PropertyDecorator => {
 
     const dependedMetadata = Reflect.getMetadata('API_DOC_DEPENDED_SCHEMAS', constructor) || [];
 
-    if (params.oneOf === undefined) {
-      const propertyType = Reflect.getMetadata('design:type', target, propertyKey);
-      const nestedMetadata = Reflect.getMetadata('API_DOC_SCHEMA', propertyType);
-
-      ref = `#/components/schemas/${nestedMetadata.title}`;
-
-      dependedMetadata.push(nestedMetadata);
-    } else {
+    if (params.oneOf !== undefined) {
       const oneOfMetadata = params.oneOf.map((propType) => Reflect.getMetadata('API_DOC_SCHEMA', propType));
+      const oneOfDependedMetadata = params.oneOf.map((propType) => Reflect.getMetadata('API_DOC_DEPENDED_SCHEMAS', propType || []));
 
       ref = [];
+      const oneOfDependedMeta = [];
       oneOfMetadata.forEach((metadata) => {
         ref.push({ $ref: `#/components/schemas/${metadata.title}` });
       });
+      oneOfDependedMetadata.forEach((schemasMetadata) => {
+        oneOfDependedMeta.push(...schemasMetadata)
+      });
 
-      dependedMetadata.push(...oneOfMetadata);
+      dependedMetadata.push(...oneOfMetadata, ...oneOfDependedMeta);
+    } else {
+      const propertyType = Reflect.getMetadata('design:type', target, propertyKey);
+      const nestedMetadata = Reflect.getMetadata('API_DOC_SCHEMA', propertyType);
+      const nestedDependedMetadata = Reflect.getMetadata('API_DOC_DEPENDED_SCHEMAS', propertyType) || [];
+
+      ref = `#/components/schemas/${nestedMetadata.title}`;
+
+      dependedMetadata.push(nestedMetadata, ...nestedDependedMetadata);
     }
 
     const currentMetadata = Reflect.getMetadata('API_DOC_SCHEMA', constructor) || null;
