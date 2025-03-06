@@ -1,7 +1,7 @@
-import { ObjectProperty, StringProperty, OpenApiDoc, OpenAPIDocConfig } from "../index";
+import { ObjectProperty, StringProperty, OpenApiDoc, OpenAPIDocConfig } from '../index';
 
-describe("ObjectProperty", () => {
-  it("Nested object success", () => {
+describe('ObjectProperty', () => {
+  it('Nested object success', () => {
     class Profile {
       @StringProperty({ description: 'name', example: 'Ivan' })
       name: string;
@@ -20,7 +20,7 @@ describe("ObjectProperty", () => {
     const config: OpenAPIDocConfig = {
       title: 'Test',
       version: '0.0.0',
-    }
+    };
     const openApi = new OpenApiDoc(config);
 
     const controller = openApi.createController();
@@ -35,8 +35,8 @@ describe("ObjectProperty", () => {
 
     const doc = openApi.compileOpenApi();
 
-    expect(doc.components.schemas.hasOwnProperty('TestClass')).toBe(true);
-    expect(doc.components.schemas.hasOwnProperty('User')).toBe(true);
-    expect(doc.components.schemas.hasOwnProperty('Profile')).toBe(true);
-  })
-})
+    expect(doc.components.schemas.hasOwnProperty('TestClass')).toBe(true); // eslint-disable-line
+    expect(doc.components.schemas.hasOwnProperty('User')).toBe(true); // eslint-disable-line
+    expect(doc.components.schemas.hasOwnProperty('Profile')).toBe(true); // eslint-disable-line
+  });
+});
