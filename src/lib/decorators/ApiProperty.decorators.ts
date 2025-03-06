@@ -191,8 +191,8 @@ export const ObjectProperty = (params: ObjectParams): PropertyDecorator => {
 
     if (params.oneOf !== undefined) {
       const oneOfMetadata = params.oneOf.map((propType) => Reflect.getMetadata('API_DOC_SCHEMA', propType));
-      const oneOfDependedMetadata = params.oneOf.map((propType) =>
-        Reflect.getMetadata('API_DOC_DEPENDED_SCHEMAS', propType || []),
+      const oneOfDependedMetadata = params.oneOf.map(
+        (propType) => Reflect.getMetadata('API_DOC_DEPENDED_SCHEMAS', propType) || [],
       );
 
       ref = [];
