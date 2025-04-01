@@ -198,6 +198,10 @@ export const ObjectProperty = (params: ObjectParams): PropertyDecorator => {
       ref = [];
       const oneOfDependedMeta = [];
       oneOfMetadata.forEach((metadata) => {
+        if (!metadata) {
+          throw new Error(`Nested object in "${constructor.name}", field: "${propertyKey}" has not OpenApi metadata.
+        Check if you have set the decorator in type of field "${propertyKey}"`);
+        }
         ref.push({ $ref: `#/components/schemas/${metadata.title}` });
       });
       oneOfDependedMetadata.forEach((schemasMetadata) => {
@@ -209,6 +213,11 @@ export const ObjectProperty = (params: ObjectParams): PropertyDecorator => {
       const propertyType = Reflect.getMetadata('design:type', target, propertyKey);
       const nestedMetadata = Reflect.getMetadata('API_DOC_SCHEMA', propertyType);
       const nestedDependedMetadata = Reflect.getMetadata('API_DOC_DEPENDED_SCHEMAS', propertyType) || [];
+
+      if (!nestedMetadata) {
+        throw new Error(`Nested object in "${constructor.name}", field: "${propertyKey}" has not OpenApi metadata.
+        Check if you have set the decorator in type of field "${propertyKey}"`);
+      }
 
       ref = `#/components/schemas/${nestedMetadata.title}`;
 

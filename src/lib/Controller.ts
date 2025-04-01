@@ -10,7 +10,7 @@ export class Controller {
   /**
    * @param openApi - instance of OpenApiDoc class
    * @param prefix - prefix in the endpoint path
-   * @param defaultTags - default tags will be add to each method of controller
+   * @param defaultTags - default tags will be added to each method of controller
    */
   constructor(openApi: OpenAPI, prefix?: string, defaultTags?: Tag[]) {
     this.openApiState = openApi;
