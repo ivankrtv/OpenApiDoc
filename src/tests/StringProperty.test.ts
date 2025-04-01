@@ -1,6 +1,6 @@
-import { OpenApiDoc } from "../lib/OpenApiDoc";
-import { ObjectProperty, StringProperty } from "../lib/decorators/ApiProperty.decorators";
-import { Schema } from "@fosfad/openapi-typescript-definitions/3.1.0";
+import { OpenApiDoc } from '../lib/OpenApiDoc';
+import { StringProperty } from '../lib/decorators/ApiProperty.decorators';
+import { Schema } from '@fosfad/openapi-typescript-definitions/3.1.0';
 
 describe('StringProperty', () => {
   it('success', () => {
@@ -10,7 +10,6 @@ describe('StringProperty', () => {
     });
 
     const controller = openapi.createController('/');
-
 
     class User {
       @StringProperty({ description: 'name', example: 'John' })
@@ -72,4 +71,4 @@ describe('StringProperty', () => {
     expect(schema['required'][0]).toBe('name');
     expect(schema['required'][1]).toBe('lastName');
   });
-})
+});

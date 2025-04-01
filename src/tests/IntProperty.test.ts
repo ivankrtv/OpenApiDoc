@@ -1,6 +1,6 @@
-import { OpenApiDoc } from "../lib/OpenApiDoc";
-import { IntProperty, StringProperty } from "../lib/decorators/ApiProperty.decorators";
-import { Schema } from "@fosfad/openapi-typescript-definitions/3.1.0";
+import { OpenApiDoc } from '../lib/OpenApiDoc';
+import { IntProperty } from '../lib/decorators/ApiProperty.decorators';
+import { Schema } from '@fosfad/openapi-typescript-definitions/3.1.0';
 
 describe('IntProperty', () => {
   it('success', () => {
@@ -10,7 +10,6 @@ describe('IntProperty', () => {
     });
 
     const controller = openapi.createController('/');
-
 
     class User {
       @IntProperty({ description: 'age', example: 25 })
@@ -71,5 +70,5 @@ describe('IntProperty', () => {
     expect(schema['required'].length).toBe(2);
     expect(schema['required'][0]).toBe('age');
     expect(schema['required'][1]).toBe('height');
-  })
-})
+  });
+});
