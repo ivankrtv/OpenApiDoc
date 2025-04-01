@@ -1,6 +1,6 @@
-import { OpenApiDoc } from "../lib/OpenApiDoc";
-import { EnumProperty } from "../lib/decorators/ApiProperty.decorators";
-import { Schema } from "@fosfad/openapi-typescript-definitions/3.1.0";
+import { OpenApiDoc } from '../lib/OpenApiDoc';
+import { EnumProperty } from '../lib/decorators/ApiProperty.decorators';
+import { Schema } from '@fosfad/openapi-typescript-definitions/3.1.0';
 
 describe('EnumProperty', () => {
   it('success', () => {
@@ -11,6 +11,7 @@ describe('EnumProperty', () => {
 
     const controller = openapi.createController('/');
 
+    /* eslint-disable no-unused-vars */
     enum Status {
       active = 'active',
       inactive = 'inactive',
@@ -20,6 +21,7 @@ describe('EnumProperty', () => {
       admin = 'admin',
       client = 'client',
     }
+    /* eslint-enable no-unused-vars */
 
     class User {
       @EnumProperty({ enum: Status })
@@ -67,4 +69,4 @@ describe('EnumProperty', () => {
     expect(schema['required'][0]).toBe('status');
     expect(schema['required'][1]).toBe('type');
   });
-})
+});

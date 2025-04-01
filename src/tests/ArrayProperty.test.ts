@@ -1,6 +1,6 @@
-import { OpenApiDoc } from "../lib/OpenApiDoc";
-import { ArrayProperty, ObjectProperty, StringProperty } from "../lib/decorators/ApiProperty.decorators";
-import { Schema } from "@fosfad/openapi-typescript-definitions/3.1.0";
+import { OpenApiDoc } from '../lib/OpenApiDoc';
+import { ArrayProperty, StringProperty } from '../lib/decorators/ApiProperty.decorators';
+import { Schema } from '@fosfad/openapi-typescript-definitions/3.1.0';
 
 describe('ArrayProperty', () => {
   it('success', () => {
@@ -61,4 +61,4 @@ describe('ArrayProperty', () => {
     expect(schemaC['properties']['c']['items']).toBeDefined();
     expect(schemaC['properties']['c']['uniqueItems']).toBeFalsy();
   });
-})
+});

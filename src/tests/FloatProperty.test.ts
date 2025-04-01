@@ -1,6 +1,6 @@
-import { OpenApiDoc } from "../lib/OpenApiDoc";
-import { FloatProperty } from "../lib/decorators/ApiProperty.decorators";
-import { Schema } from "@fosfad/openapi-typescript-definitions/3.1.0";
+import { OpenApiDoc } from '../lib/OpenApiDoc';
+import { FloatProperty } from '../lib/decorators/ApiProperty.decorators';
+import { Schema } from '@fosfad/openapi-typescript-definitions/3.1.0';
 
 describe('FloatProperty', () => {
   it('success', () => {
@@ -59,4 +59,4 @@ describe('FloatProperty', () => {
     expect(schema['required'].length).toBe(1);
     expect(schema['required'][0]).toBe('height');
   });
-})
+});
