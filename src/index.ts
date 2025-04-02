@@ -19,6 +19,14 @@ import {
 } from './lib/decorators/ApiProperty.decorators';
 import { ModelDescription } from './lib/decorators/ModelDescription.decorator';
 import { OperationManager, EventOperationParams, ResponseSchemas, OperationParams } from './lib/OperationManager';
+import {
+  stringSchema,
+  integerSchema,
+  floatSchema,
+  enumSchema,
+  objectSchema,
+  dateSchema,
+} from './lib/factories/schemasFactory';
 
 export {
   OpenApiDoc,
@@ -45,4 +53,10 @@ export {
   ResponseSchemas,
   OperationParams,
   EventOperationParams,
+  stringSchema,
+  integerSchema,
+  floatSchema,
+  enumSchema,
+  objectSchema,
+  dateSchema,
 };
