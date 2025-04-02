@@ -1,6 +1,7 @@
 import { OpenApiDoc } from '../lib/OpenApiDoc';
 import { ArrayProperty, StringProperty } from '../lib/decorators/ApiProperty.decorators';
 import { Schema } from '@fosfad/openapi-typescript-definitions/3.1.0';
+import { stringSchema } from '../lib/factories/schemasFactory';
 
 describe('ArrayProperty', () => {
   it('success', () => {
@@ -60,5 +61,52 @@ describe('ArrayProperty', () => {
     expect(schemaC['properties']['c']).toBeDefined();
     expect(schemaC['properties']['c']['items']).toBeDefined();
     expect(schemaC['properties']['c']['uniqueItems']).toBeFalsy();
+  });
+
+  it('success: item schema', () => {
+    const openapi = new OpenApiDoc({
+      title: 'Test',
+      version: '0.0.0',
+    });
+
+    const controller = openapi.createController('/');
+
+    const phoneNumberSchema = stringSchema({
+      description: 'Phone number',
+      example: '79998887766',
+      minLength: 11,
+      maxLength: 11,
+      format: 'phone number',
+    });
+
+    class A {
+      @ArrayProperty({
+        description: 'A',
+        items: phoneNumberSchema,
+        minItems: 1,
+        maxItems: 10,
+      })
+      a: string;
+    }
+
+    controller.addApiMethod('/', {
+      method: 'POST',
+      title: 'Test',
+      isImplemented: true,
+      requiresAuthorization: false,
+      requestBody: A,
+    });
+
+    const document = openapi.compileOpenApi();
+
+    expect(document.components.schemas['A']).toBeDefined();
+    const schemaA = document.components.schemas['A'];
+    expect(schemaA['properties']).toBeDefined();
+    expect(schemaA['properties']['a']).toBeDefined();
+    expect(schemaA['properties']['a']['type']).toBe('array');
+    expect(schemaA['properties']['a']['items']['type']).toBe('string');
+    expect(schemaA['properties']['a']['items']['example']).toBe('79998887766');
+    expect(schemaA['properties']['a']['items']['description']).toBe('Phone number');
+    expect(schemaA['properties']['a']['items']['format']).toBe('phone number');
   });
 });
